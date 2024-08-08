@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <h1>Welcome to StreetSpecter</h1>
+    <p>Revolutionizing road maintenance with AI-powered pothole detection</p>
+    <a href="{{ url_for('report') }}" class="cta-button">Report a Pothole</a>
+</section>
+<section class="features">
+    <h2>Key Features</h2>
+    <ul>
+        <li>Real-time road surface scanning</li>
+        <li>Advanced AI-powered damage detection</li>
+        <li>Centralized dashboard for city officials</li>
+        <li>Citizen engagement for improved accuracy</li>
+    </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Report a Pothole{% endblock %}
+{% block content %}
+<h1>Report a Pothole</h1>
+<form id="reportForm">
+    <label for="latitude">Latitude:</label>
+    <input type="number" id="latitude" name="latitude" required step="any">
+    
+    <label for="longitude">Longitude:</label>
+    <input type="number" id="longitude" name="longitude" required step="any">
+    
+    <label for="severity">Severity:</label>
+    <select id="severity" name="severity" required>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+    
+    <button type="submit">Submit Report</button>
+</form>
+<div id="message"></div>
+{% endblock %}
