@@ -1,22 +1,103 @@
-{% extends "base.html" %}
-{% block title %}Report a Pothole{% endblock %}
-{% block content %}
-<h1>Report a Pothole</h1>
-<form id="reportForm">
-    <label for="latitude">Latitude:</label>
-    <input type="number" id="latitude" name="latitude" required step="any">
-    
-    <label for="longitude">Longitude:</label>
-    <input type="number" id="longitude" name="longitude" required step="any">
-    
-    <label for="severity">Severity:</label>
-    <select id="severity" name="severity" required>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-    </select>
-    
-    <button type="submit">Submit Report</button>
-</form>
-<div id="message"></div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetSpecter Pothole Reporting</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Public+Sans:wght@400;500;700;900" />
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        body {
+            font-family: "Public Sans", "Noto Sans", sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header, .footer {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #111418;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111418;
+            margin-bottom: 10px;
+        }
+        .card-content {
+            font-size: 16px;
+            color: #60758a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>StreetSpecter Pothole Reporting</h1>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Report a Pothole</div>
+            <button id="start-btn" class="button">Start Report</button>
+        </div>
+
+        <div id="camera-container" style="display:none;" class="card">
+            <video id="video" width="640" height="480" autoplay></video>
+            <button id="capture-btn" class="button">Capture Photo</button>
+        </div>
+
+        <canvas id="canvas" style="display:none;"></canvas>
+
+        <div class="card">
+            <h2 class="card-title">Dashboard Overview</h2>
+            <!-- Add dashboard content here -->
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Potholes Reported in the Last 30 Days</h2>
+            <p class="card-content">Total Potholes: 26</p>
+            <p class="card-content">Avg. Days to Repair: 21</p>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Recent Reports</h2>
+            <!-- Add recent reports table or list here -->
+        </div>
+
+        <div class="footer">
+            <p>StreetSpecter © 2024</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
