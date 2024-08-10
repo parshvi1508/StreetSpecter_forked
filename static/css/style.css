@@ -9,11 +9,17 @@
 body {
     line-height: 1.6;
     color: #ffffff;
-    background-color: rgb(29, 29, 29);
+    background-color: #272727;
 }
 
 h2 {
     color: #ecf0f1;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, black, cornflowerblue, black);
 }
 
 /* Header and navigation */
@@ -72,6 +78,7 @@ nav ul li a {
     background-color: white;
     margin: 2px 0;
 }
+
 /* Main content */
 main {
     padding: 2rem;
@@ -97,8 +104,9 @@ main {
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 2rem;
+
 }
 
 .cta-button {
@@ -138,7 +146,7 @@ main {
     flex-basis: calc(50% - 2rem);
     margin: 1rem;
     padding: 1rem;
-    color:black;
+    color: black;
     background-color: #ecf0f1;
     border-radius: 5px;
     border: 1px solid #bdc3c7;
@@ -146,16 +154,28 @@ main {
 }
 
 /* Dashboard */
+
 #map {
     height: 400px;
     width: 100%;
-    margin-bottom: 2rem;
-    background-color: #ecf0f1;
+    z-index: 0;
+}
+
+.marker-id {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #666;
+    color: #000;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 0.5rem;
 }
 
 th,
@@ -166,7 +186,7 @@ td {
 }
 
 th {
-    background-color: #3498db;
+    background-color: #000000;
     color: #fff;
 }
 
@@ -217,6 +237,7 @@ button[type="submit"]:hover {
     nav {
         position: relative;
     }
+
     nav ul {
         display: none;
         flex-direction: column;
@@ -227,6 +248,7 @@ button[type="submit"]:hover {
         background-color: black;
         padding: 0.5rem;
         border-radius: 0.5rem;
+        z-index: 1;
     }
 
     nav ul.show {

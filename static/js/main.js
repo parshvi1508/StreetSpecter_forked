@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Simple map initialization (replace with a proper map library like Leaflet or Google Maps)
     const map = document.getElementById('map');
     if (map) {
-        // This is a placeholder. You should implement a proper map here.
-        map.textContent = 'Map placeholder - implement with a mapping library';
+        
     }
 });

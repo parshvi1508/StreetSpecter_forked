@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StreetSpecter - {% block title %}{% endblock %}</title>
@@ -10,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Whisper&display=swap" rel="stylesheet">
+    {% endblock %}
 </head>
 <body>
     <header>
@@ -29,6 +31,7 @@
             </ul>
         </nav>
     </header>
+    <hr>
     <main>
         {% block content %}{% endblock %}
     </main>
@@ -41,5 +44,6 @@
         });
     </script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>
