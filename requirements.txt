@@ -4,3 +4,6 @@ gunicorn
 flask_cors
 python-dotenv
 pytz
+requests
+datetime
+base64
