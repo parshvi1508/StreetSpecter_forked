@@ -108,7 +108,7 @@
                         <img id="mediaPreview" src="" alt="Media preview" style="display:none;">
                     </div>
 
-                    <button type="submit">Submit Report</button>
+                    <button type="submit" onclick= >Submit Report</button>
                 </form>
                 <div id="message"></div>
             </div>
@@ -210,6 +210,10 @@
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+
                 const formData = new FormData(form);
 
                 fetch('/report', {
@@ -232,6 +236,10 @@
                 .catch(error => {
                     console.error('Error:', error);
                     messageDiv.textContent = 'An error occurred. Please try again.';
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit Report';
                 });
             });
         });

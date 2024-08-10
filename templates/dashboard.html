@@ -14,6 +14,7 @@
             <th>Location</th>
             <th>Severity</th>
             <th>Timestamp</th>
+            <th>Media</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
             <td>{{report.location }}</td>
             <td>{{ report.severity }}</td>
             <td>{{ report.timestamp }}</td>
+            <td> <a href="{{ report.media_url }}" style="color: white; text-decoration: none;">See Media</a></td>
         </tr>
         {% endfor %}
     </tbody>
