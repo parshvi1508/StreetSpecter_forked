@@ -1,12 +1,9 @@
-# File: app.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import numpy as np
 from PIL import Image as image
-# from tensorflow.keras.models import load_model
-# from tensorflow.keras.preprocessing import image
 from ultralytics import YOLO
 
 
@@ -14,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load your trained model
-model = YOLO('yolov8n.pt')
+model = YOLO('best.pt')
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}

@@ -7,22 +7,33 @@
     <title>Report a Pothole</title>
     <style>
         body {
-            /* font-family: Arial, sans-serif; */
             margin: 0;
-            /* padding: 20px; */
             background-color: #272727;
+            font-family: Arial, sans-serif;
+            color:black
         }
         .container {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
             text-align: center;
             color: #333;
+        }
+        .desktop-layout {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-container {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .map-container {
+            flex: 1;
+            display: none;
         }
         form {
             display: flex;
@@ -39,58 +50,118 @@
             border-radius: 4px;
         }
         button {
-            background-color: #007bff;
+            background-color: #000000;
             color: white;
             border: none;
             cursor: pointer;
             margin-top: 20px;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #141414;
         }
         #message {
             margin-top: 20px;
             text-align: center;
             font-weight: bold;
         }
-        #photoPreview {
+        #mediaPreview {
             max-width: 100%;
             margin-top: 10px;
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .desktop-layout {
+                flex-direction: column;
+            }
+            .form-container {
+                padding-right: 0;
+            }
+            .map-container {
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Report a Pothole</h1>
-        <form id="reportForm">
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" readonly required>
-            <button type="button" id="getLocation">Get Current Location</button>
+        <h1>Report a Pothole</h1><br>
+        <div class="desktop-layout">
+            <div class="form-container">
+                <form id="reportForm">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" readonly placeholder="Choose on Map or Get current location" required>
+                    <button type="button" id="getLocation">Get Current Location</button>
 
-            <label for="severity">Severity:</label>
-            <select id="severity" name="severity" required>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
+                    <label for="severity">Severity:</label>
+                    <select id="severity" name="severity" required>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
 
-            <!-- <label for="photo">Take a Photo:</label>
-            <input type="file" id="photo" name="photo" accept="image/*" capture="environment">
-            <img id="photoPreview" src="" alt="Photo preview" style="display:none;"> -->
+                    <label for="media">Capture/Upload Photo or Video:</label>
+                    <input type="file" id="media" name="media" accept="image/*,video/*" capture>
+                    <div id="mediaPreviewContainer">
+                        <img id="mediaPreview" src="" alt="Media preview" style="display:none;">
+                    </div>
 
-            <button type="submit">Submit Report</button>
-        </form>
-        <div id="message"></div>
+                    <button type="submit">Submit Report</button>
+                </form>
+                <div id="message"></div>
+            </div>
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
     </div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzc0ai0ZZsk4Ah71vHczQY_dIi9l54oWE"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('reportForm');
             const locationInput = document.getElementById('location');
             const getLocationBtn = document.getElementById('getLocation');
-            // const photoInput = document.getElementById('photo');
-            // const photoPreview = document.getElementById('photoPreview');
-            // const messageDiv = document.getElementById('message');
+            const mediaInput = document.getElementById('media');
+            const mediaPreview = document.getElementById('mediaPreview');
+            const mediaPreviewContainer = document.getElementById('mediaPreviewContainer');
+            const messageDiv = document.getElementById('message');
+            const mapContainer = document.querySelector('.map-container');
+            const mapDiv = document.getElementById('map');
+            let map, marker;
+
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (!isMobile) {
+                mediaInput.removeAttribute('capture');
+                mapContainer.style.display = 'block';
+                initMap();
+            }
+
+            function initMap() {
+                map = new google.maps.Map(mapDiv, {
+                    center: { lat: 0, lng: 0 },
+                    zoom: 2
+                });
+
+                map.addListener('click', function(e) {
+                    placeMarker(e.latLng);
+                });
+            }
+
+            function placeMarker(latLng) {
+                if (marker) {
+                    marker.setPosition(latLng);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map
+                    });
+                }
+                locationInput.value = `${latLng.lat()}, ${latLng.lng()}`;
+            }
 
             getLocationBtn.addEventListener('click', function() {
                 if (navigator.geolocation) {
@@ -99,6 +170,12 @@
                             const lat = position.coords.latitude;
                             const lon = position.coords.longitude;
                             locationInput.value = `${lat}, ${lon}`;
+                            if (!isMobile && map) {
+                                const latLng = new google.maps.LatLng(lat, lon);
+                                map.setCenter(latLng);
+                                map.setZoom(15);
+                                placeMarker(latLng);
+                            }
                         },
                         function(error) {
                             console.error("Error getting location:", error);
@@ -110,15 +187,24 @@
                 }
             });
 
-            photoInput.addEventListener('change', function(event) {
+            mediaInput.addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        photoPreview.src = e.target.result;
-                        photoPreview.style.display = 'block';
-                    };
-                    reader.readAsDataURL(file);
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            mediaPreview.src = e.target.result;
+                            mediaPreview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } else if (file.type.startsWith('video/')) {
+                        const videoElement = document.createElement('video');
+                        videoElement.src = URL.createObjectURL(file);
+                        videoElement.controls = true;
+                        videoElement.style.maxWidth = '100%';
+                        mediaPreviewContainer.innerHTML = '';
+                        mediaPreviewContainer.appendChild(videoElement);
+                    }
                 }
             });
 
@@ -135,7 +221,12 @@
                     messageDiv.textContent = data.message;
                     if (data.message === 'Report submitted successfully') {
                         form.reset();
-                        photoPreview.style.display = 'none';
+                        mediaPreview.style.display = 'none';
+                        mediaPreviewContainer.innerHTML = '<img id="mediaPreview" src="" alt="Media preview" style="display:none;">';
+                        if (marker) {
+                            marker.setMap(null);
+                            marker = null;
+                        }
                     }
                 })
                 .catch(error => {

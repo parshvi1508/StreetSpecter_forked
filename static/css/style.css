@@ -213,7 +213,7 @@ button[type="submit"] {
     width: 40%;
     padding: 0.8rem;
     margin-top: 1rem;
-    background-color: #3498db;
+    background-color: #129c00;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -222,7 +222,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #2980b9;
+    background-color: #14aa00;
 }
 
 #message {
