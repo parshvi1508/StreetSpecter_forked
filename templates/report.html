@@ -1,22 +1,149 @@
 {% extends "base.html" %}
 {% block title %}Report a Pothole{% endblock %}
 {% block content %}
-<h1>Report a Pothole</h1>
-<form id="reportForm">
-    <label for="latitude">Latitude:</label>
-    <input type="number" id="latitude" name="latitude" required step="any">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report a Pothole</title>
+    <style>
+        body {
+            /* font-family: Arial, sans-serif; */
+            margin: 0;
+            /* padding: 20px; */
+            background-color: #272727;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, button {
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        #photoPreview {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Report a Pothole</h1>
+        <form id="reportForm">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" readonly required>
+            <button type="button" id="getLocation">Get Current Location</button>
 
-    <label for="longitude">Longitude:</label>
-    <input type="number" id="longitude" name="longitude" required step="any">
+            <label for="severity">Severity:</label>
+            <select id="severity" name="severity" required>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
 
-    <label for="severity">Severity:</label>
-    <select id="severity" name="severity" required>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-    </select>
+            <!-- <label for="photo">Take a Photo:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" capture="environment">
+            <img id="photoPreview" src="" alt="Photo preview" style="display:none;"> -->
 
-    <button type="submit">Submit Report</button>
-</form>
-<div id="message"></div>
+            <button type="submit">Submit Report</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('reportForm');
+            const locationInput = document.getElementById('location');
+            const getLocationBtn = document.getElementById('getLocation');
+            // const photoInput = document.getElementById('photo');
+            // const photoPreview = document.getElementById('photoPreview');
+            // const messageDiv = document.getElementById('message');
+
+            getLocationBtn.addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            const lat = position.coords.latitude;
+                            const lon = position.coords.longitude;
+                            locationInput.value = `${lat}, ${lon}`;
+                        },
+                        function(error) {
+                            console.error("Error getting location:", error);
+                            messageDiv.textContent = "Error getting location. Please try again.";
+                        }
+                    );
+                } else {
+                    messageDiv.textContent = "Geolocation is not supported by this browser.";
+                }
+            });
+
+            photoInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        photoPreview.src = e.target.result;
+                        photoPreview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+
+                fetch('/report', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    messageDiv.textContent = data.message;
+                    if (data.message === 'Report submitted successfully') {
+                        form.reset();
+                        photoPreview.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    messageDiv.textContent = 'An error occurred. Please try again.';
+                });
+            });
+        });
+    </script>
+</body>
 {% endblock %}

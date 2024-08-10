@@ -91,7 +91,7 @@ def report():
         else:
             return jsonify({'message': 'Error submitting report'}), 500
 
-    return render_template('rep.html')
+    return render_template('report.html')
 
 
 
