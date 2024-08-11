@@ -20,19 +20,24 @@ __StreetSpecter__ is an innovative AI-driven solution designed to detect pothole
 - ### Training Results
 
 1. Results
-    ![results](https://github.com/user-attachments/assets/bbda69d0-b001-4f3a-8cdc-17929de3a3c0)
 
-2. Confusion matrix (
-    ![confusion_matrix](https://github.com/user-attachments/assets/1917b6d5-c2b1-4c15-9bde-13a3e9f32a70)
+   ![results](https://github.com/user-attachments/assets/bbda69d0-b001-4f3a-8cdc-17929de3a3c0)
 
-3. Val Batch 0
-    ![validation](https://github.com/user-attachments/assets/61ac0a9d-77df-4c83-83f1-c27a4099e49f)
+3. Confusion matrix (
+
+   ![confusion_matrix](https://github.com/user-attachments/assets/1917b6d5-c2b1-4c15-9bde-13a3e9f32a70)
+
+5. Val Batch 0
+
+   ![validation](https://github.com/user-attachments/assets/61ac0a9d-77df-4c83-83f1-c27a4099e49f)
 
 
 
 ## StreetSpecter Application Snaps
 
-![Screenshot (331)](https://github.com/user-attachments/assets/28d46fd6-aaf6-4f70-96c1-478990986c70)  ![Screenshot (333)](https://github.com/user-attachments/assets/f904f9a0-1989-4147-a3ab-98aa2a49dd4d)
+![Screenshot (331)](https://github.com/user-attachments/assets/28d46fd6-aaf6-4f70-96c1-478990986c70) 
+
+![Screenshot (333)](https://github.com/user-attachments/assets/f904f9a0-1989-4147-a3ab-98aa2a49dd4d)
 
 ## Instructions to use
 
