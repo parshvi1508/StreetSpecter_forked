@@ -12,6 +12,30 @@ __StreetSpecter__ is an innovative AI-driven solution designed to detect pothole
 * Easy navigation and reporting.
 * Set up alerts for specific areas or severity levels.
 
+## Yolov8s training Stats
+### Model Trained in Colab (T4 GPU) on 5493 Images for 25 epochs in 1.63 hours, Validated on 1698 Images. 
+
+![Screenshot (329)](https://github.com/user-attachments/assets/43b7be87-c06e-452d-849f-76d068e308bd)  
+
+### Training Results
+
+1. Results
+- ![results](https://github.com/user-attachments/assets/bbda69d0-b001-4f3a-8cdc-17929de3a3c0)
+
+2. Confusion matrix (
+- ![confusion_matrix](https://github.com/user-attachments/assets/1917b6d5-c2b1-4c15-9bde-13a3e9f32a70)
+
+3. Val Batch 0
+- ![validation](https://github.com/user-attachments/assets/61ac0a9d-77df-4c83-83f1-c27a4099e49f)
+
+
+
+## StreetSpecter Application Snaps
+
+![Screenshot (331)](https://github.com/user-attachments/assets/28d46fd6-aaf6-4f70-96c1-478990986c70)
+
+![Screenshot (333)](https://github.com/user-attachments/assets/f904f9a0-1989-4147-a3ab-98aa2a49dd4d)
+
 ## Instructions to use
 
 ### Prerequisites
